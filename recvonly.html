@@ -5,7 +5,43 @@
         <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
     </head>
     <body>
-      <header class="sticky row">
+      <script>
+        const signalingUrl = 'wss://ayame-lite.shiguredo.jp/signaling';
+      let roomId = '3t4ofekal-test-room';
+      let clientId = null;
+      let videoCodec = null;
+      let audioCodec = null;
+      let signalingKey = null;
+      
+      function onChangeVideoCodec() {
+        videoCodec = document.getElementById("video-codec").value;
+        if (videoCodec == 'none') {
+          videoCodec = null;
+        }
+      }
+      
+      // query string から roomId, clientId を取得するヘルパー
+      function parseQueryString() {
+        const qs = window.Qs;
+        if (window.location.search.length > 0) {
+          var params = qs.parse(window.location.search.substr(1));
+          if (params.roomId) {
+            roomId = params.roomId;
+          }
+          if (params.clientId) {
+            clientId = params.clientId;
+          }
+          if (params.key) {
+            signalingKey = params.key;
+          }
+        }
+      }
+      
+      parseQueryString();
+      
+      </script>
+      
+            <header class="sticky row">
         <h4>Ayame RecvOnly Sample</h4>
       </header>
       <div>
@@ -23,7 +59,7 @@
       </div>
       <script src="https://cdn.jsdelivr.net/npm/@open-ayame/ayame-web-sdk@19.8.0/dist/ayame.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.7.0/qs.min.js"></script>
-      <script src="./main.js"></script>
+      <!-- <script src="./main.js"></script> -->
       <script type="text/javascript">
         const options = Ayame.defaultOptions;
         options.clientId = clientId ? clientId : options.clientId;
