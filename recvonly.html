@@ -4,10 +4,11 @@
         <title>Ayame RecvOnly Sample</title>
         <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
     </head>
-    <body onload=startConn();>
+    <body>
+    <!-- <body onload=startConn();> -->
       <script>
         const signalingUrl = 'wss://ayame-lite.shiguredo.jp/signaling';
-      let roomId = '3t4ofekal-test-room';
+      let roomId = 'test-room';
       let clientId = null;
       let videoCodec = null;
       let audioCodec = null;
@@ -22,37 +23,63 @@
       
       // query string から roomId, clientId を取得するヘルパー
       function parseQueryString() {
-        const qs = window.Qs;
+        //const qs = window.Qs;
         if (window.location.search.length > 0) {
-          var params = qs.parse(window.location.search.substr(1));
+          //var params = qs.parse(window.location.search.substr(1));
+          var params = getUrlVars();
           if (params.roomId) {
             roomId = params.roomId;
           }
           if (params.clientId) {
             clientId = params.clientId;
           }
-          if (params.key) {
-            signalingKey = params.key;
+          if (params.signalingKey) {
+            signalingKey = params.signalingKey;
           }
         }
       }
       
-      parseQueryString();
+      //parseQueryString();
       
+
+      /**
+       * URL解析して、クエリ文字列を返す
+       * @returns {Array} クエリ文字列
+       */
+      function getUrlVars()
+      {
+          var vars = [], max = 0, hash = "", array = "";
+          var url = window.location.search;
+
+          //?を取り除くため、1から始める。複数のクエリ文字列に対応するため、&で区切る
+          hash  = url.slice(1).split('&');    
+          max = hash.length;
+          for (var i = 0; i < max; i++) {
+              array = hash[i].split('=');    //keyと値に分割。
+              vars.push(array[0]);    //末尾にクエリ文字列のkeyを挿入。
+              vars[array[0]] = array[1];    //先ほど確保したkeyに、値を代入。
+          }
+
+          return vars;
+      }
+
       </script>
       
       <!-- <header class="sticky row">
         <h4>Ayame RecvOnly Sample</h4>
       </header> -->
-      <!-- <div> -->
-      <div style="display: none">
+      <div>
+      <!-- <div style="display: none"> -->
         <p>ルームID
         <input id="roomIdInput" disabled type="text" value=""></input>
         </p>
         <p>クライアントID
         <input id="clientIdInput" disabled type="text" value=""></input>
         </p>
-        <button onclick="startConn();">接続</button>
+        <p>シグナリングキー
+          <input id="signalingKeyInput" disabled type="text" value=""></input>
+          </p>
+          <button onclick="startConn();">接続</button>
         <button onclick="conn.disconnect();">切断</button>
       </div>
       <div style="float:left;">
@@ -65,11 +92,14 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.7.0/qs.min.js"></script>
       <!-- <script src="./main.js"></script> -->
       <script type="text/javascript">
+
+        parseQueryString();
+
         const options = Ayame.defaultOptions;
         options.clientId = clientId ? clientId : options.clientId;
         options.video.direction = 'recvonly';
         options.audio.direction = 'recvonly';
-        //options.video.VideoCodecOption = 'VP9'; //add
+        
         const conn = Ayame.connection(signalingUrl, roomId, options, true);
         const startConn = async () => {
           await conn.connect(null, { key: signalingKey });
@@ -81,6 +111,7 @@
         };
         document.querySelector("#roomIdInput").value = roomId;
         document.querySelector("#clientIdInput").value = options.clientId;
+        document.querySelector("#signalingKeyInput").value = signalingKey;
       </script>
   </body>
 </html>
