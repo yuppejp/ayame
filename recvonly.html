@@ -82,8 +82,16 @@
         <h4>Ayame RecvOnly Sample</h4>
       </header> -->
 
-      <div>
+      <!-- <div style="float:left"> -->
+      <div align="center">
+          <!-- <video id="remote-video" autoplay="" style="width: 400px; height: 300px; border: 1px solid black;"> -->
+        <video id="remote-video" autoplay controls style="width: 300px; height: 200px; border: 1px solid black;"></video>
+      </div>
+
+      <div align="center">
         <!-- <div style="display: none"> -->
+          <button onclick="startConn();">接続</button>
+          <button onclick="conn.disconnect();">切断</button>
           <p>ルームID
           <input id="roomIdInput" disabled type="text" value=""></input>
           </p>
@@ -93,14 +101,8 @@
           <p>シグナリングキー
             <input id="signalingKeyInput" disabled type="text" value=""></input>
             </p>
-            <button onclick="startConn();">接続</button>
-          <button onclick="conn.disconnect();">切断</button>
         </div>
   
-      <div style="float:left">
-          <!-- <video id="remote-video" autoplay="" style="width: 400px; height: 300px; border: 1px solid black;"> -->
-        <video id="remote-video" autoplay controls style="width: 300px; height: 200px; border: 1px solid black;"></video>
-      </div>
 
       <script src="https://cdn.jsdelivr.net/npm/@open-ayame/ayame-web-sdk@19.8.0/dist/ayame.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.7.0/qs.min.js"></script>
