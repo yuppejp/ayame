@@ -3,6 +3,19 @@
         <meta charset="utf-8">
         <title>Ayame RecvOnly Sample</title>
         <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+        <style>
+          video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            background-size: cover;
+          }
+        </style>
     </head>
     <!-- <body> -->
     <body onload=startConn();>
@@ -82,7 +95,7 @@
           <button onclick="startConn();">接続</button>
         <button onclick="conn.disconnect();">切断</button>
       </div>
-      <div style="float:left;">
+      <div style="float:left">
           <!-- <video id="remote-video" autoplay="" style="width: 400px; height: 300px; border: 1px solid black;"> -->
         <video id="remote-video" autoplay controls style="width: 300px; height: 200px; border: 1px solid black;"></video>
       </div>
