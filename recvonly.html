@@ -4,7 +4,7 @@
         <title>Ayame RecvOnly Sample</title>
         <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
     </head>
-    <body>
+    <body onload=startConn();>
       <script>
         const signalingUrl = 'wss://ayame-lite.shiguredo.jp/signaling';
       let roomId = '3t4ofekal-test-room';
@@ -41,10 +41,11 @@
       
       </script>
       
-            <header class="sticky row">
+      <!-- <header class="sticky row">
         <h4>Ayame RecvOnly Sample</h4>
-      </header>
-      <div>
+      </header> -->
+      <!-- <div> -->
+      <div style="display: none">
         <p>ルームID
         <input id="roomIdInput" disabled type="text" value=""></input>
         </p>
@@ -55,7 +56,7 @@
         <button onclick="conn.disconnect();">切断</button>
       </div>
       <div style="float:left;">
-        <!-- <video id="remote-video" autoplay="" style="width: 400px; height: 300px; border: 1px solid black;"> -->
+          <!-- <video id="remote-video" autoplay="" style="width: 400px; height: 300px; border: 1px solid black;"> -->
         <video id="remote-video" autoplay controls style="width: 400px; height: 300px; border: 1px solid black;">
           <RemoteVideo ref={remoteVideoRef} muted autoPlay controls/>
         </video>
